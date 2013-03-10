@@ -12,7 +12,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #define  DELIMITADOR (char *)" "
-#define  NUM 40
+#define  NUM 20
 
 #ifndef __PARSER__H
 #define __PARSER__H

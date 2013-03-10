@@ -14,18 +14,8 @@
 
 #include "parser.h"
 
-char **separaParametros (
-          char *linea,             /* <=  cadena a procesar */
-          char **ficheroEntrada,   /* =>  nombre del fichero a utilizar
-                                      en la redireccion de entrada.
-                                      devuelve NULL si no hay redireccion */
-          char **ficheroSalida,    /* =>  nombre del fichero a utilizar
-                                      en la redireccion de salida.
-                                      devuelve NULL si no hay redireccion */
-          int  *ejecucionSumergida /* =>  1 ON, 0 OFF */
-     )
-
 {
+
 static char *param[255];
 //char *tok;
 int ntok=0;

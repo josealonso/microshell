@@ -46,6 +46,7 @@ param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);        
      {
      getcwd (camino, NUM);
      printf ("%s",camino); 
+  printf ("\nPrueba2, despues de free\n");
      }
 
    /*************** Orden interna CD *****************/
@@ -55,7 +56,12 @@ param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);        
        chdir (getenv ("HOME"));
      else  
        if  (chdir (param [1]) == -1)
-         printf ("\n%s",strerror (errno));
+           {
+            printf ("\n%s",strerror (errno));
+            //exit (-1);
+           } 
+       else   
+       chdir (param[1]); 
      }                           
 
 
@@ -78,7 +84,7 @@ param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);        
                 /* Redirección de salida*/
         if (f_salida != NULL)
          {
-           if  ((fd = creat (f_salida,0666)) == -1)
+           if  ((fd = creat (f_salida, 666)) == -1)
            {
             printf ("\n%s",strerror (errno));
             exit (-1);
