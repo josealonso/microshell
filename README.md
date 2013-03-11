@@ -6,3 +6,10 @@ make
 
 And the executable called msh will be created.
 
+                        
+                             T O D O
+                             
+- Make the comments Doxygen-friendly.
+- Translate everything into English.
+- Add more comments to the code.
+- Add some basic, useful functionalities, like the history expansion feature.
