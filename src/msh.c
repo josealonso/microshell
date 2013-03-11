@@ -1,5 +1,5 @@
 /************************************************/
-/* MICROSH.C: módulo principal de la práctica 6 */
+/*              MSH.C: main module              */
 /************************************************/
 
 #include "parser.h"
@@ -14,12 +14,12 @@ char *f_entrada, *f_salida;
 int segundo_plano;
 char **param = NULL;
 char camino[NUM];
-//char *camino = NULL; No hace falta asignación dinámica de memoria
+    //char *camino = NULL; No hace falta asignación dinámica de memoria
 int statusp, fd;
 
 system ("clear");
 
-while (1)       /* El  programa es un bucle infinito */
+while (1)       /* The program is an infinite loop */
   { 
    printf ("\n$>");
 
@@ -29,27 +29,27 @@ while (1)       /* El  programa es un bucle infinito */
    i = strlen (cadena);
    cadena[i-1] = ('\0');
 
-   if ( strlen (cadena) == 0)        /* Por si no se teclea nada */
+   if ( strlen (cadena) == 0)        /* in case there is no input from the keyboard */
      continue;   
 
-param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);                       /* Salta al módulo "parser.c" */
+param = separaParametros (cadena, &f_entrada, &f_salida, &segundo_plano);     /* Jump to the module "parser.c" */
 
-   /*************** Orden interna EXIT ***************/
+   /*************** Built-in EXIT command ***************/
    if (strcmp (param[0],"exit") == 0)   
      {
-     printf ("\n\t FIN DE NUESTRO MICRO-INTÉRPRETE DE COMANDOS\n\n");
+     printf ("\n\t END OF THE MICRO-SHELL\n\n");
      return(-1);  
      }
 
-   /*************** Orden interna PWD ****************/
+   /*************** Built-in PWD command ****************/
    else if (strcmp (param[0],"pwd") == 0) 
      {
      getcwd (camino, NUM);
      printf ("%s",camino); 
-  printf ("\nPrueba2, despues de free\n");
+              // printf ("\nPrueba2, despues de free\n");
      }
 
-   /*************** Orden interna CD *****************/
+   /*************** Built-in CD command *****************/
    else if (strcmp (param[0],"cd") == 0)   
      {
      if (param[1] == NULL)
@@ -67,7 +67,7 @@ param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);        
 
 
 
-   /**************** ÓRDENES EXTERNAS ***************/
+   /****************  EXTERNAL COMMANDS ***************/
 
    else
    {
@@ -78,10 +78,10 @@ param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);        
        printf ("\n%s",strerror (errno));
      break;
 
-/************************ PROCESO HIJO *************************/
+/************************ CHILD PROCESS *************************/
      case 0:
      
-                /* Redirección de salida*/
+                /* Output Redirection*/
         if (f_salida != NULL)
          {
            if  ((fd = creat (f_salida, 666)) == -1)
@@ -89,12 +89,12 @@ param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);        
             printf ("\n%s",strerror (errno));
             exit (-1);
            } 
-         close (1);       /* cierro la salida estándar ( descriptor nº1) */
+         close (1);       /* the standard output is closed */
          dup (fd);        /* le asigno un 1 al descriptor del fichero */
          close (fd);
          }                       
 
-                /* Redirección de entrada*/
+                /* Input Redirection*/
         if (f_entrada != NULL)
          {
          if  ((fd = open (f_entrada, O_RDONLY)) == -1)
@@ -103,24 +103,24 @@ param = separaParametros (cadena, &f_entrada, &f_salida,&segundo_plano);        
             exit (-1);
            } 
 
-         close (0);      /* cierro la entrada estándar ( descriptor nº0) */
+         close (0);      /* the standard input is closed */
          dup (fd);       /* le asigno un 0 al descriptor del fichero */
          close (fd);
          }                           
 
-       execvp (param[0], param);      /* Ejecución de la orden externa */
-       printf ("\nORDEN INEXISTENTE\nVuelva a intentarlo");
+       execvp (param[0], param);      /* The external command is executed */
+       printf ("\nUNKNOWN COMMAND \nPlease, enter a valid command");
        exit (0);    /* Al ejecutar exit, el proceso hijo termina. */ 
        
-/************************ PROCESO PADRE *************************/
+/************************ PARENT PROCESS *************************/
      default:
-                /* Ejecución en segundo plano */
+                /* Execution in the background */
        if ( !segundo_plano )
          wait (&statusp);
   
-     }   /* Llave del "switch" */   
-   }   /* Llave del "else" */
-  }  /* Fin del "while" */
+     }   /* End of "switch" */   
+   }   /* End of "else" */
+  }  /* End of "while" */
 }     
 
 

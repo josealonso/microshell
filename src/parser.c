@@ -1,19 +1,10 @@
 /*************************************************
-** PARSER.C: separa la línea en palabras
-**************************************************
-
-   DESCRIPCION:
-       Devuelve la direccion a una array estatico de punteros a cadenas de
-       caracteres. 
-       Cada puntero apuntara a cada una de las cadenas delimitadas por espacios
-       en blanco que aparezcan en el parametro linea. 
-       En el array no se almacenan los simbolos de redireccion ni los nombres de
-       los ficheros a emplear en las redirecciones ni el simbolo &. 
-       El primer elemento del array no utilizado apunta a NULL
-*/
+**       PARSER.C: breaks the line into tokens
+*************************************************/
 
 #include "parser.h"
 
+char **separaParametros (char *linea, char **ficheroEntrada, char **ficheroSalida, int  *ejecucionSumergida)
 {
 
 static char *param[255];
@@ -39,5 +30,8 @@ if ((param[ntok] = strtok (linea, DELIMITADOR)) != NULL) {
                ntok++;
      } /* while */
   } /* if */ 
+
   return (param);
-} /* separaParametros */
+
+} /* End of separaParametros */
+
