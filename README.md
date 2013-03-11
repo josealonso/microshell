@@ -4,5 +4,5 @@ To compile the shell, simply run:
 
 make
 
-And the executable called microsh will be created.
+And the executable called msh will be created.
 
