@@ -2,6 +2,9 @@
 ******************* PARSER.H *********************
 *************************************************/
 
+#ifndef __PARSER__H
+#define __PARSER__H
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,9 +16,6 @@
 #include <fcntl.h>
 #define  DELIMITADOR (char *)" "
 #define  NUM 60
-
-#ifndef __PARSER__H
-#define __PARSER__H
 
 char **separaParametros (
           char *linea,             /* <=  line to be processed          */
